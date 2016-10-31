@@ -20,9 +20,11 @@ API接口获取域名 http://222.73.0.213:8300/
  [3.Login](#3login) `POST` 普通登录  
  [4.Logout](#4logout) `POST` 注销  
  [5.Room](#5rooms) `GET, POST, PUT, DELETE`  增删改查Room  
- [6.UserIcon](#6usericon) `PUT` 修改用户头像  
+ [6.UserIcon](#6usericon) `PUT` 修改用户头像,`待修改为二进制流读取头像信息`  
  [7.UserPassword](#7userpassword) `PUT` 修改密码  
  [8.UserInfo ](#8userinfo) `PUT` 修改用户基本信息  
+ [9.PhoneCaptcha](#9phonecaptcha) `POST` 手机验证码生成接口  
+ [10.PhoneLogin](#10phonelogin) `GET` 手机验证码登录接口  
 
 ------------------
 
@@ -671,3 +673,102 @@ ex: http://222.73.0.213:8300/users/1/ `1是用户的pk`
 }
 
 ```
+
+------------------
+
+### 9.PhoneCaptcha  
+
+
+发送手机短信验证码  
+请求方式： `POST`  
+方法名： phonelogin  
+ex: http://222.73.0.213:8300/phonelogin/  
+请求格式： JSON  
+请求参数：  
+
+| 字段 | 类型 | 需求 | 说明 |
+| ------| ------ | ------ | ------ |
+| phone | string | 必填 | 手机 |
+
+返回参数：  
+
+| 字段 | 类型 | 说明 |
+| ------ | ------ | ------ |
+| code | string | HTTP状态码 |
+| status | string | 状态 |
+| msg | string | 详细信息 |
+
+------------------
+
+### 10.PhoneLogin  
+
+手机验证码登录  
+请求方式： `GET`  
+方法名： phonelogin  
+ex: http://222.73.0.213:8300/phonelogin/  
+请求格式： JSON  
+请求参数：  
+
+| 字段 | 类型 | 需求 | 说明 |
+| ------| ------ | ------ | ------ |
+| phone | string | 必填 | 手机 |
+| captcha | string | 必填 | 验证码 |
+
+返回参数：  
+
+| 字段 | 类型 | 说明 |
+| ------ | ------ | ------ |
+| code | string | HTTP状态码 |
+| status | string | 状态 |
+| msg | string | 详细信息 |
+| pk | string | 唯一标识 |
+| username | string | 用户名 |
+| password | string | 加密后密码 |
+| nickname | string | 昵称 |
+| sex | string | 0:男,1:女,2:未知 |
+| age | string | 年龄 |
+| email | string | email |
+| phone | string | 手机 |
+| country | string | 国家 |
+| province | string | 省/直辖市 |
+| city | string | 市 |
+| career | string | 职业 |
+| login_type | string | 登录类型 |
+| img | string | 头像地址 |
+| date_joined | string | 注册日期 |
+| roomid | string | 分配房间号 |
+| token | string | 用户验证口令,下一次登录或修改密码时将获取新的token |
+
+数据样例：  
+```
+成功返回：200
+{
+  "pk": "1",
+  "username": "12345",
+  "password": "00faa0de2651c8b54e5ab54173cda706",
+  "token": "8ca6dd209e7f780229cdee74ef525dfe",
+  "login_type": "1",
+  "nickname": "never",
+  "sex": "0",
+  "age": "0",
+  "email": "never@gmail.com",
+  "phone": "18752000500",
+  "img": "static/mcuser/img/tests1.jpg",
+  "country": "",
+  "province": "",
+  "city": "",
+  "career": "",
+  "roomid": "8696",
+  "date_joined": "2016-10-28T02:27:15.211240Z",
+  "status": "SUCCESS",
+  "msg": "修改成功",
+  "code": "200"
+}
+
+```
+
+
+
+
+
+
