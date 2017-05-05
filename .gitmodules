@@ -1,0 +1,3 @@
+[submodule "win/Pyside-"]
+	path = win/Pyside-
+	url = git@github.com:nevermoreluo/Pyside-.git
